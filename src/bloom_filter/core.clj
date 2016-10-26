@@ -1,0 +1,63 @@
+
+
+
+(ns bloom-filter.core
+  (:gen-class)
+  (:require [bloom-filter.hash-functions :as hash-family]
+            [bloom-filter.params :as params]))
+
+
+(defrecord BloomFilter [bit-array hash-family param-map])
+
+
+(defn make-bloom-filter
+  [num-items acceptable-false-positive-rate]
+  (if (= acceptable-false-positive-rate 0)
+    (throw (Exception. "acceptable-false-positive-rate cannot be 0.g")))
+  (let [p (params/optimal-bloom-filter-params num-items acceptable-false-positive-rate)
+        bit-array (vec (repeat (:num-bits p) 0))
+        hash-family (hash-family/make-hash-family (:num-hash-funcs p)
+                                                  (:num-bits p))]
+    (BloomFilter. bit-array hash-family p)))
+
+(defn add-element-bloom-filter
+  [bloom-filter element]
+  (let [hash-inds (hash-family/pass-to-hash-family (:hash-family bloom-filter)
+                                                   element)
+        new-bit-array (loop [ba (:bit-array bloom-filter)
+                             btf hash-inds]
+                        (if (empty? btf)
+                          ba
+                          (recur (assoc ba (first btf) 1)
+                                 (rest btf))))]
+    (assoc bloom-filter :bit-array new-bit-array)))
+
+(defn add-elements-bloom-filter
+  [bloom-filter elements]
+  (loop [bfilter bloom-filter
+         els elements]
+    (if (empty? els)
+      bfilter
+      (recur (add-element-bloom-filter bfilter (first els))
+             (rest els)))))
+
+(defn check-element-bloom-filter
+  [bloom-filter element]
+  (let [hash-inds (hash-family/pass-to-hash-family (:hash-family bloom-filter)
+                                                   element)
+        bit-array-subset (vec
+                           (map #(get (:bit-array bloom-filter) %)
+                                hash-inds))]
+    (= (count bit-array-subset)
+       (apply + bit-array-subset))))
+
+(defn -main
+  "Very simple test of the bloom filter."
+  [& args]
+  (let [bfilter (-> (make-bloom-filter 100 0.01)
+                    (add-elements-bloom-filter (shuffle (range 100))))]
+    (println (check-element-bloom-filter bfilter 50))
+    (println (check-element-bloom-filter bfilter 111))
+    (println (check-element-bloom-filter bfilter -50))))
+
+
