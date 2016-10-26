@@ -1,13 +1,18 @@
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.erp12/bloom-filter.svg)](https://clojars.org/org.clojars.erp12/bloom-filter)
+
 # bloom-filter
 
 A simple implementation of bloom filters in Clojure
+
+![](https://clojars.org/compojure/latest-version.svg)
 
 ## Installation
 
 Add the following to your project dependencies:
 
-[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.erp12/bloom-filter.svg)](https://clojars.org/org.clojars.erp12/bloom-filter)
-
+```
+[org.clojars.erp12/bloom-filter "0.2.0"]
+```
 
 ## Usage
 

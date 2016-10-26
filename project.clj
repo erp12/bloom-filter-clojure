@@ -1,4 +1,4 @@
-(defproject com.github.erp12/bloom-filter "0.2.0"
+(defproject org.clojars.erp12/bloom-filter "0.2.0"
   :description "A simple implementation of bloom filters for Clojure"
   :url "https://github.com/erp12/bloom-filter-clojure"
   :license {:name "Eclipse Public License"
