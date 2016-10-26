@@ -5,6 +5,14 @@
             [bloom-filter.core :refer :all]
             [bloom-filter.generate-data :as data]))
 
+(deftest simple-test-a
+  (testing "Simple Test"
+    (let [bfilter (-> (make-bloom-filter 100 0.01)
+                      (add-elements-bloom-filter (shuffle (range 100))))]
+      (is (check-element-bloom-filter bfilter 50))
+      (is (not (check-element-bloom-filter bfilter 111)))
+      (is (not (check-element-bloom-filter bfilter -50))))))
+
 
 (def email-bloom-filter
   (let [dataset (data/make-email-address-datset 10000)

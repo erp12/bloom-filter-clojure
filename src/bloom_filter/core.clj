@@ -51,13 +51,3 @@
     (= (count bit-array-subset)
        (apply + bit-array-subset))))
 
-(defn -main
-  "Very simple test of the bloom filter."
-  [& args]
-  (let [bfilter (-> (make-bloom-filter 100 0.01)
-                    (add-elements-bloom-filter (shuffle (range 100))))]
-    (println (check-element-bloom-filter bfilter 50))
-    (println (check-element-bloom-filter bfilter 111))
-    (println (check-element-bloom-filter bfilter -50))))
-
-
