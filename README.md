@@ -9,7 +9,12 @@ A simple implementation of bloom filters in Clojure
 
 Add the following to your project dependencies:
 
-![](https://clojars.org/org.clojars.erp12/bloom-filter/latest-version.svg)
+```
+[org.clojars.erp12/bloom-filter "0.2.0"]
+```
+
+Then call `lein deps` from the project folder.
+
 
 ## Usage
 
