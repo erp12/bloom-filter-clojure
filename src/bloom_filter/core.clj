@@ -1,6 +1,5 @@
 
 
-
 (ns bloom-filter.core
   (:gen-class)
   (:require [bloom-filter.hash-functions :as hash-family]
@@ -15,7 +14,7 @@
   (if (= acceptable-false-positive-rate 0)
     (throw (Exception. "acceptable-false-positive-rate cannot be 0.g")))
   (let [p (params/optimal-bloom-filter-params num-items acceptable-false-positive-rate)
-        bit-array (vec (repeat (:num-bits p) 0))
+        bit-array (vec (repeat (:num-bits p) false))
         hash-family (hash-family/make-hash-family (:num-hash-funcs p)
                                                   (:num-bits p))]
     (BloomFilter. bit-array hash-family p)))
@@ -28,7 +27,7 @@
                              btf hash-inds]
                         (if (empty? btf)
                           ba
-                          (recur (assoc ba (first btf) 1)
+                          (recur (assoc ba (first btf) true)
                                  (rest btf))))]
     (assoc bloom-filter :bit-array new-bit-array)))
 
@@ -49,5 +48,5 @@
                            (map #(get (:bit-array bloom-filter) %)
                                 hash-inds))]
     (= (count bit-array-subset)
-       (apply + bit-array-subset))))
+       (count (filter true? bit-array-subset)))))
 
