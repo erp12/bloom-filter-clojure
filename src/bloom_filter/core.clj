@@ -1,5 +1,4 @@
 
-
 (ns bloom-filter.core
   (:gen-class)
   (:require [ds-utils.hash-functions :as hash-funcs]
@@ -48,6 +47,7 @@
                                 hash-inds))]
     (= (count bit-array-subset)
        (count (filter true? bit-array-subset)))))
+
 
 
 

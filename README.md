@@ -47,7 +47,7 @@ Everyone is encouraged to submit pull requests, or open issues with feature requ
 
 ## License
 
-Copyright © 2016 FIXME
+Copyright © 2016 Edward Pantridge
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.

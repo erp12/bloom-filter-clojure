@@ -1,6 +1,6 @@
 # Introduction to bloom-filter
 
-Lets make a simple bloom filter to determine if an email address is part of a whitelist!
+Let's make a simple bloom filter to determine if an email address is part of a whitelist!
 
 Let's start by `require`-ing the library.
 
